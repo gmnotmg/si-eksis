@@ -1,0 +1,14 @@
+{
+  "name": "SI EKSIS — Dinas Sosial Kab. Cirebon",
+  "short_name": "SI EKSIS",
+  "description": "Sistem Informasi Ekspedisi Surat Internal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FEFCE8",
+  "theme_color": "#FACC15",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "../../assets/Kabupaten_Cirebon.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "../../assets/Kabupaten_Cirebon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
