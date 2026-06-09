@@ -1,1 +1,19 @@
-node_modules
+# dependencies
+node_modules/
+**/node_modules/
+
+# env
+.env
+backend/.env
+frontend/.env
+
+# database
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+
+# uploads
+uploads/
+backend/uploads/
+frontend/uploads/
