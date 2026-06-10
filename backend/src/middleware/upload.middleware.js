@@ -4,10 +4,18 @@ const fs     = require('fs')
 const crypto = require('crypto')
 
 const UPLOAD_PATH = path.resolve(process.env.UPLOAD_PATH || './uploads')
-fs.mkdirSync(UPLOAD_PATH, { recursive: true })
+
+// Di Vercel filesystem read-only — skip mkdir
+if (process.env.NODE_ENV !== 'production') {
+  fs.mkdirSync(UPLOAD_PATH, { recursive: true })
+}
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOAD_PATH),
+  destination: (req, file, cb) => {
+    // Di production pakai /tmp (writable di Vercel)
+    const dest = process.env.NODE_ENV === 'production' ? '/tmp' : UPLOAD_PATH
+    cb(null, dest)
+  },
   filename: (req, file, cb) => {
     const random = crypto.randomBytes(16).toString('hex')
     const ext    = path.extname(file.originalname).toLowerCase()
@@ -27,7 +35,6 @@ const MAX_SIZE = parseInt(process.env.MAX_FILE_SIZE) || 10 * 1024 * 1024
 
 const upload = multer({ storage, fileFilter, limits: { fileSize: MAX_SIZE } })
 
-// Wrapper yang handle error multer dengan pesan yang jelas
 function handleUpload(req, res, next) {
   upload.single('file_pdf')(req, res, (err) => {
     if (!err) return next()
